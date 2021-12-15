@@ -14,7 +14,13 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = Event::get();
+        
+        if(count(Event::get()) > 5){
+            $events = Event::paginate(5);
+        }else{
+            $events= Event::get();
+        }
+
         return view('eventlist',compact('events'));
     }
 
@@ -41,9 +47,9 @@ class EventController extends Controller
         $event->finished_at = $request->finished_at;
         
         if($event->save()){
-            return 'oldu';
+            return redirect()->back()->with('success','Event Başarıyla Eklendi');
         }else{
-            return 'olmadı';
+            return redirect()->back()->with('error','Event Eklenemedi');
         }
     }
 
@@ -86,10 +92,14 @@ class EventController extends Controller
         if($request->finished_at){
             $event->finished_at = $request->finished_at;
         }
-       if($event->save()){
-           return 'oldu';
+       if($event->save())
+       {
+        return redirect()->back()->with('success','Event Başarıyla Eklendi');
+
        }else{
-           return 'olmadı';
+
+        return redirect()->back()->with('error','Event Eklenemedi');
+
        }
     }
 
@@ -101,6 +111,14 @@ class EventController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $event = Event::where('id',$id)->delete();
+        return redirect()->back()->with('success','Event Başarıyla Silindi');
+    }
+    public function search()
+    {
+        $filter = $_GET['arama'];
+        $events = Event::where('eventName','LIKE','%'.$filter.'%')->get();
+        return view('eventlist',compact('events'));
+       
     }
 }

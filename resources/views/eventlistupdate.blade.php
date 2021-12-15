@@ -8,21 +8,35 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-            <form action="{{route('events.update',$event->id)}}" method="post">
-            @method('PUT')
-                @csrf
-  <div class="mb-3">
-    <label for="eventName" class="form-label">Event Girin</label>
-    <input type="text" class="form-control" id="eventName" name="eventName">
-  
-  </div>
-  <div class="mb-3">
-    <label for="finished_at" class="form-label">Son Tarih</label>
-    <input type="date" class="form-control" id="finished_at" name="finished_at">
-  </div>
-  
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+
+            <div class="container mt-5">
+    <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-md-8">
+        <a href="{{route('events.index')}}">
+             <button type="submit" class="btn btn-warning">Back</button>
+        </a>
+       
+        <form id="regForm" action="{{route('events.update',$event->id)}}" method="post">
+        @method('PUT')
+        @csrf
+            
+                <h1 id="register">Update Event</h1>
+                <div class="all-steps" id="all-steps"> <span class="step"><i class="fa fa-user"></i></span> <span class="step"><i class="fa fa-map-marker"></i></span> <span class="step"><i class="fa fa-shopping-bag"></i></span> <span class="step"><i class="fa fa-car"></i></span> <span class="step"><i class="fa fa-spotify"></i></span> <span class="step"><i class="fa fa-mobile-phone"></i></span> </div>
+                <div class="tab">
+                    <h6>Event</h6>
+                    <p> <input placeholder="Name..." oninput="this.className = ''" name="eventName" value="{{$event->eventName}}"></p>
+                </div>
+                <div class="tab">
+                    <h6>Last Date</h6>
+                    <p><input type="date" name="finished_at" value="{{$event->finished_at}}"></p>
+                </div>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+        </div>
+    </div>
+</div>
+     
+
            
             </div>
         </div>

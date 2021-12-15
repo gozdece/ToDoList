@@ -21,3 +21,4 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::resource('events',EventController::class);
+Route::get('/search',[EventController::class,'search']);
